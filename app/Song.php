@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
-  protected $fillable = ['artist_id', 'song_name'];
+  protected $primaryKey = 'id';
+  //protected $fillable = ['artist_id', 'song_name'];
 
   public static function List($id = 'all') {
     /*
-    * Returns a list with all** song_names in alphabetical order ({artist_name:name'})
-    ** Accepts parameter $id to find only songs from an artist with a certain id
+    * Returns a list with all song_names in alphabetical order ({artist_name:name'})
+    * Accepts optional parameter $id to find only songs from an artist with a certain id
+    * returns query results : {song_name, id}
     */
     if ($id == 'all'){
       $Songs = Song::select('song_name', 'id')->orderBy('song_name')->get();
@@ -24,7 +26,8 @@ class Song extends Model
 
   public static function DefineSong($id) {
     /*
-    * Returns the songs name and artist_id
+    * gets the song_name and artist_id from a song_id
+    * returns query results : {song_name, artist_id}
     */
     $Song = Song::select('song_name', 'artist_id')->where('id', $id)->get();
     return $Song;
@@ -33,7 +36,8 @@ class Song extends Model
   public static function CountSongsPerArtist($id)
   {
     /*
-    *
+    * counts the number of songs a certain artist with artist_id has
+    * returns int : number_of_songs
     */
     $Count = Song::where('artist_id', $id)->count();
     return $Count;
@@ -41,6 +45,10 @@ class Song extends Model
 
   public static function SearchForSongs($SearchQuota)
   {
+    /*
+    * searches for songs that match the SearchQuota
+    * returns query results : {song_name, artist_id, song_id}
+    */
     $Songs = Song::select('song_name', 'artist_id', 'id')->where('song_name', 'like', '%'.$SearchQuota.'%')->orderBy('song_name')->get();
     return $Songs;
   }
@@ -58,6 +66,11 @@ class Song extends Model
 
   public static function checkIfExists($song_name, $artist_id)
   {
+    /*
+    * checks if a certain song exists from song_name and artist_id
+    * returns boolean : 1 if it does, 0 if it doesnt
+    */
+
     $Bool = Song::select('song_name', 'artist_id')->where([['song_name', $song_name], ['artist_id', $artist_id ]])->count();
     if($Bool > 1)
     {
@@ -70,11 +83,13 @@ class Song extends Model
 
   public function artist()
   {
+    //relation
     return $this->belongsTo('App\Artist');
   }
 
   public function song_effects()
   {
+    //relation
     return $this->hasMany('App\SongEffect');
   }
 

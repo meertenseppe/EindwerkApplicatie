@@ -18,7 +18,7 @@
       </form>
     </div>
     <div class="row">
-      <h2><?php echo ucwords(strtolower($Data['ArtistName'])); ?></h2>
+      <h2><a class='text-dark' href="{{route('Artists').'/'.$Data['ArtistId']}}">{{ucwords(strtolower($Data['ArtistName']))}}</a></h2>
     </div>
 
   <div class="effects">

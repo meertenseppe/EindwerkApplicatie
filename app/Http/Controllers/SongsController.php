@@ -48,10 +48,11 @@ class SongsController extends Controller
       }
       $AllEffectsNotInSong = SongEffect_Effect::effectsNotUsedBySong($id);
       $Comments = Comment::commentsPerSong($id);
-      
+
 
       $Data =  ['SongName' => $SongName   //data to pass to view
           , 'ArtistName' => $ArtistName
+          , 'ArtistId' => $artist_id
           , 'SongEffects' => $SongEffects
           , 'id' => $id
           , 'AllEffectsNotInSong' => $AllEffectsNotInSong

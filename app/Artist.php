@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artist extends Model
 {
-    protected $fillable = ['artist_name', 'artist_picture'];
+    protected $primaryKey = 'id';
+    protected $fillable = ['artist_name'];
 
     public static function List() {
       /*
       * Returns a list with all artist_names in alphabetical order ({artist_name:name'})
+      * returns query results : list of artist_name's & artist_id's
       */
       $Artists = Artist::select('artist_name', 'id')->orderBy('artist_name')->get();
       return $Artists;
@@ -20,18 +22,19 @@ class Artist extends Model
     public static function getNameById($id) {
       /*
       * Finds artist_name according to artist id
+      * returns query results : a single artist_name
       */
       $ArtistName = Artist::select('artist_name')->where('id', $id)->get();
       return $ArtistName;
     }
 
-    public function songs()
-    {
-      return $this->hasMany('App\Song');
-    }
 
     public static function checkIfExists($artist_name)
     {
+      /*
+      * Checks if a certain $artist_name allready exists in the database
+      * returns boolean : 1 if name exists, 0 if not
+      */
       $Bool = Artist::select('artist_name')->where('artist_name', $artist_name)->count();
       if($Bool > 1)
       {
@@ -39,5 +42,11 @@ class Artist extends Model
       } else {
         return $Bool; //true -> artist exists, false -> artist doesnt exist yet
       }
+    }
+
+    public function songs()
+    {
+      //relation : artists - songs
+      return $this->hasMany('App\Song');
     }
 }

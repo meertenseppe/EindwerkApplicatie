@@ -41,21 +41,27 @@ class User extends VoyagerUser implements MustVerifyEmail
 
     public function getImageAttribute()
     {
+      /*
+      * returns image_url : avatar
+      */
        return $this->avatar;
     }
 
     public function votes()
     {
+      //relation
       return $this->hasMany('App\vote');
     }
 
     public static function NameAndAvatarById($id)
     {
+      /*
+      * gets both avatar and user_name from user_id
+      * returns query result  : {user_name, avatar}
+      */
       $User= User::select('name', 'avatar')->where('id', $id)->first();
       return $User;
     }
-
-
 
 
 }
