@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use \TCG\Voyager\Models\User as VoyagerUser;
 
-class User extends \TCG\Voyager\Models\User
+class User extends VoyagerUser implements MustVerifyEmail
 {
+
     use Notifiable;
 
     /**
@@ -16,7 +18,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar'
     ];
 
     /**
@@ -36,4 +38,24 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getImageAttribute()
+    {
+       return $this->avatar;
+    }
+
+    public function votes()
+    {
+      return $this->hasMany('App\vote');
+    }
+
+    public static function NameAndAvatarById($id)
+    {
+      $User= User::select('name', 'avatar')->where('id', $id)->first();
+      return $User;
+    }
+
+
+
+
 }

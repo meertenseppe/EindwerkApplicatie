@@ -1,0 +1,85 @@
+.List ul {
+  list-style-type: none;
+}
+
+.FXBlock {
+  border: 3px solid black;
+  display: inline-block;
+  float: left;
+  border-radius: 5%;
+  margin: 15px;;
+  color: white;
+}
+
+.FXBlock h3 {
+  padding-left: 20px;
+  padding-right: 15px;
+
+}
+
+.vote {
+  margin-left:5px;
+  margin-top: 5px;
+  color: white;
+
+}
+
+
+.add {
+  font-size: 500%;
+}
+
+.score {
+  float: right;
+}
+
+.addNew {
+  border: 3px solid black;
+  display: inline-block;
+  clear: left;
+  border-radius: 5%;
+  margin: 15px;
+
+}
+
+hr {
+  border: 1px solid #75767B;
+}
+
+
+a {
+  color: #3D3D3F;
+}
+
+/*comment section*/
+
+.thumbnail {
+    padding:0px;
+}
+.panel {
+	position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+.panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}
+
+/*----------------*/

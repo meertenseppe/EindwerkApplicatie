@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('FXfinder', 'FXfinder'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,6 +55,18 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    |Storage Url
+    |--------------------------------------------------------------------------
+    |
+    | This Url is used to get the images uploaded via voyager
+    |
+    */
+
+    'storage_url' => env('STORAGE_URL', 'http://localhost/mijnFiles/Eindwerk/Eindwerk/storage/app/public/'),
+
 
     /*
     |--------------------------------------------------------------------------
