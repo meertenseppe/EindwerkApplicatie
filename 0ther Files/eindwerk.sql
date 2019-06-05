@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 04 jun 2019 om 12:38
+-- Gegenereerd op: 05 jun 2019 om 20:56
 -- Serverversie: 10.1.35-MariaDB
 -- PHP-versie: 7.2.9
 
@@ -130,7 +130,9 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`id`, `created_at`, `updated_at`, `song_id`, `user_id`, `content`) VALUES
 (17, '2019-05-22 08:00:00', '2019-05-23 05:45:31', 1, 4, 'Seems Correct'),
 (18, '2019-06-03 21:11:00', '2019-06-03 21:11:39', 1, 1, 'Fuzz is definitly wrong'),
-(19, '2019-06-03 23:15:39', '2019-06-03 23:15:39', 1, 1, 'hello there');
+(19, '2019-06-03 23:15:39', '2019-06-03 23:15:39', 1, 1, 'hello there'),
+(20, '2019-06-05 05:34:15', '2019-06-05 05:34:15', 2, 4, 'Distortion pedal Kurt used was a BOSS DS-2 turbo distortion pedal'),
+(21, '2019-06-05 09:01:34', '2019-06-05 09:01:34', 16, 6, 'Not sure if he uses overdrive or distrotion');
 
 -- --------------------------------------------------------
 
@@ -294,7 +296,8 @@ INSERT INTO `effects` (`id`, `created_at`, `updated_at`, `type`) VALUES
 (5, '2019-05-23 06:12:50', '2019-05-23 06:12:50', 'Overdrive'),
 (6, '2019-05-23 06:12:59', '2019-05-23 06:12:59', 'Delay'),
 (7, '2019-05-30 16:53:06', '2019-05-30 16:53:06', 'Whammy'),
-(10, '2019-05-30 17:02:38', '2019-05-30 17:02:38', 'Reverb');
+(10, '2019-05-30 17:02:38', '2019-05-30 17:02:38', 'Reverb'),
+(11, '2019-06-05 06:04:26', '2019-06-05 06:04:26', 'Wah');
 
 -- --------------------------------------------------------
 
@@ -323,7 +326,13 @@ INSERT INTO `favorites` (`id`, `created_at`, `updated_at`, `user_id`, `song_id`)
 (8, '2019-05-31 14:06:29', '2019-05-31 14:06:29', 1, 23),
 (11, '2019-06-03 13:13:52', '2019-06-03 13:13:52', 1, 1),
 (12, '2019-06-03 13:21:10', '2019-06-03 13:21:10', 1, 39),
-(13, '2019-06-03 14:33:31', '2019-06-03 14:33:31', 1, 1);
+(13, '2019-06-03 14:33:31', '2019-06-03 14:33:31', 1, 1),
+(15, '2019-06-05 09:00:45', '2019-06-05 09:00:45', 6, 16),
+(16, '2019-06-05 11:14:39', '2019-06-05 11:14:39', 5, 4),
+(17, '2019-06-05 11:14:47', '2019-06-05 11:14:47', 5, 28),
+(18, '2019-06-05 11:15:02', '2019-06-05 11:15:02', 5, 2),
+(19, '2019-06-05 11:15:14', '2019-06-05 11:15:14', 5, 14),
+(20, '2019-06-05 11:15:30', '2019-06-05 11:15:30', 5, 6);
 
 -- --------------------------------------------------------
 
@@ -343,7 +352,7 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2019-05-16 05:44:55', '2019-05-16 05:44:55');
+(1, 'admin', '2019-05-16 03:44:55', '2019-05-16 03:44:55');
 
 -- --------------------------------------------------------
 
@@ -372,23 +381,23 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
-(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 4, '2019-05-16 05:44:55', '2019-05-16 10:20:52', 'voyager.media.index', NULL),
-(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 3, '2019-05-16 05:44:55', '2019-05-16 05:44:55', 'voyager.users.index', NULL),
-(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 2, '2019-05-16 05:44:55', '2019-05-16 05:44:55', 'voyager.roles.index', NULL),
-(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 10, '2019-05-16 05:44:56', '2019-05-16 10:20:55', NULL, NULL),
-(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 1, '2019-05-16 05:44:56', '2019-05-16 10:20:52', 'voyager.menus.index', NULL),
-(7, 1, 'Database', '', '_self', 'voyager-data', NULL, NULL, 8, '2019-05-16 05:44:56', '2019-05-16 10:20:52', 'voyager.database.index', NULL),
-(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 2, '2019-05-16 05:44:56', '2019-05-16 10:20:52', 'voyager.compass.index', NULL),
-(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, NULL, 9, '2019-05-16 05:44:56', '2019-05-16 10:20:55', 'voyager.bread.index', NULL),
-(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 11, '2019-05-16 05:44:56', '2019-05-16 10:20:55', 'voyager.settings.index', NULL),
-(14, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 3, '2019-05-16 05:45:18', '2019-05-16 10:20:55', 'voyager.hooks', NULL),
-(15, 1, 'Artists', '', '_self', NULL, NULL, NULL, 12, '2019-05-16 07:12:03', '2019-05-16 10:20:55', 'voyager.artists.index', NULL),
-(16, 1, 'Comments', '', '_self', NULL, NULL, NULL, 13, '2019-05-16 07:14:17', '2019-05-16 10:20:55', 'voyager.comments.index', NULL),
-(20, 1, 'Songs', '', '_self', NULL, NULL, NULL, 14, '2019-05-16 07:18:31', '2019-05-16 10:20:55', 'voyager.songs.index', NULL),
-(23, 1, 'Effects', '', '_self', NULL, NULL, NULL, 15, '2019-05-16 07:42:50', '2019-05-16 10:20:55', 'voyager.effects.index', NULL),
-(24, 1, 'Song Effects', '', '_self', NULL, NULL, NULL, 16, '2019-05-16 07:44:36', '2019-05-16 10:20:55', 'voyager.song-effects.index', NULL),
-(25, 1, 'Favorites', '', '_self', NULL, NULL, NULL, 17, '2019-05-31 14:01:01', '2019-05-31 14:01:01', 'voyager.favorites.index', NULL),
-(26, 1, 'Votes', '', '_self', NULL, NULL, NULL, 18, '2019-06-01 08:10:01', '2019-06-01 08:10:01', 'voyager.votes.index', NULL);
+(2, 1, 'Media', '', '_self', 'voyager-images', NULL, 5, 4, '2019-05-16 03:44:55', '2019-06-04 11:53:04', 'voyager.media.index', NULL),
+(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 4, '2019-05-16 03:44:55', '2019-06-04 11:53:40', 'voyager.users.index', NULL),
+(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 5, '2019-05-16 03:44:55', '2019-06-04 11:53:40', 'voyager.roles.index', NULL),
+(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 1, '2019-05-16 03:44:56', '2019-06-04 11:53:04', NULL, NULL),
+(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 1, '2019-05-16 03:44:56', '2019-05-16 08:20:52', 'voyager.menus.index', NULL),
+(7, 1, 'Database', '', '_self', 'voyager-data', NULL, NULL, 2, '2019-05-16 03:44:56', '2019-06-04 11:53:40', 'voyager.database.index', NULL),
+(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 2, '2019-05-16 03:44:56', '2019-05-16 08:20:52', 'voyager.compass.index', NULL),
+(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, NULL, 3, '2019-05-16 03:44:56', '2019-06-04 11:53:40', 'voyager.bread.index', NULL),
+(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, 5, 5, '2019-05-16 03:44:56', '2019-06-04 11:53:04', 'voyager.settings.index', NULL),
+(14, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 3, '2019-05-16 03:45:18', '2019-05-16 08:20:55', 'voyager.hooks', NULL),
+(15, 1, 'Artists', '', '_self', NULL, NULL, NULL, 6, '2019-05-16 05:12:03', '2019-06-04 11:53:40', 'voyager.artists.index', NULL),
+(16, 1, 'Comments', '', '_self', NULL, NULL, NULL, 7, '2019-05-16 05:14:17', '2019-06-04 11:53:40', 'voyager.comments.index', NULL),
+(20, 1, 'Songs', '', '_self', NULL, NULL, NULL, 8, '2019-05-16 05:18:31', '2019-06-04 11:53:40', 'voyager.songs.index', NULL),
+(23, 1, 'Effects', '', '_self', NULL, NULL, NULL, 9, '2019-05-16 05:42:50', '2019-06-04 11:53:40', 'voyager.effects.index', NULL),
+(24, 1, 'Song Effects', '', '_self', NULL, NULL, NULL, 10, '2019-05-16 05:44:36', '2019-06-04 11:53:40', 'voyager.song-effects.index', NULL),
+(25, 1, 'Favorites', '', '_self', NULL, NULL, NULL, 11, '2019-05-31 12:01:01', '2019-06-04 11:53:40', 'voyager.favorites.index', NULL),
+(26, 1, 'Votes', '', '_self', NULL, NULL, NULL, 12, '2019-06-01 06:10:01', '2019-06-04 11:53:40', 'voyager.votes.index', NULL);
 
 -- --------------------------------------------------------
 
@@ -656,7 +665,7 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`, `group`) VALUES
 (1, 'site.title', 'Site Title', 'FXfinder', '', 'text', 1, 'Site'),
-(2, 'site.description', 'Site Description', 'Find wich guitar effects to use on your favorite songs.', '', 'text', 2, 'Site'),
+(2, 'site.description', 'Site Description', 'Find out wich guitar effects to use on your favorite songs.', '', 'text', 2, 'Site'),
 (4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', NULL, '', 'text', 4, 'Site'),
 (5, 'admin.bg_image', 'Admin Background Image', 'settings\\June2019\\4HXFrAiDN6ws7JyfolEI.png', '', 'image', 5, 'Admin'),
 (6, 'admin.title', 'Admin Title', 'FXfinder', '', 'text', 1, 'Admin'),
@@ -742,15 +751,20 @@ CREATE TABLE `song_effects` (
 INSERT INTO `song_effects` (`id`, `created_at`, `updated_at`, `song_id`, `effect_id`, `upvotes`, `downvotes`) VALUES
 (4, '2019-05-23 06:21:35', '2019-05-23 06:21:35', 1, 1, 1, 0),
 (5, '2019-05-23 07:14:00', '2019-06-03 20:51:25', 1, 2, 13, 2),
-(6, '2019-05-23 07:15:08', '2019-05-23 07:15:08', 2, 4, 1, 0),
-(7, '2019-05-23 07:15:31', '2019-05-23 07:15:31', 2, 2, 1, 0),
+(6, '2019-05-23 07:15:08', '2019-06-05 05:33:31', 2, 4, 2, 0),
+(7, '2019-05-23 07:15:31', '2019-06-05 05:33:33', 2, 2, 2, 0),
 (8, '2019-05-23 07:15:55', '2019-05-23 07:15:55', 18, 6, 1, 0),
 (13, '2019-05-30 17:02:00', '2019-06-03 20:54:03', 1, 3, 1, 10),
-(14, '2019-05-30 17:02:00', '2019-06-03 10:59:40', 1, 10, 45, 8),
+(14, '2019-05-30 17:02:00', '2019-06-04 15:36:16', 1, 10, 46, 8),
 (15, '2019-05-31 17:02:50', '2019-05-31 17:02:50', 19, 3, 1, 0),
 (16, '2019-05-31 17:02:56', '2019-05-31 17:02:56', 19, 4, 1, 0),
 (17, '2019-05-31 17:03:00', '2019-05-31 17:03:00', 19, 10, 1, 0),
-(19, '2019-06-03 07:51:17', '2019-06-03 07:51:17', 37, 4, 1, 0);
+(19, '2019-06-03 07:51:17', '2019-06-03 07:51:17', 37, 4, 1, 0),
+(20, '2019-06-05 06:04:16', '2019-06-05 06:04:16', 11, 6, 1, 0),
+(21, '2019-06-05 06:04:26', '2019-06-05 06:04:37', 11, 11, 1, 0),
+(22, '2019-06-05 06:04:52', '2019-06-05 06:04:52', 11, 4, 1, 0),
+(23, '2019-06-05 08:28:00', '2019-06-05 08:28:00', 18, 11, 1, 0),
+(24, '2019-06-05 09:01:11', '2019-06-05 09:01:11', 16, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -794,9 +808,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', '/users/admin_1559318096.jpg', '2019-05-23 06:31:04', '$2y$10$7sC7k4WgAECjrchJXdRPJeLxSRwl84Feaaf5Z1vDNaCrhli88SDBm', 'MTgMDgCoHOQLMepT2hNaZTXLwTNpGvPn9RrWJjdYzdKFtGtlx0OWDliKvlhZ', '{\"locale\":\"en\"}', '2019-05-16 05:45:10', '2019-05-31 13:54:56'),
-(4, 2, 'Seppe Meerten', 'meertenseppe@gmail.com', 'users\\May2019\\R6OmZOoBTCkEhpXLEGuV.jpg', '2019-05-21 07:21:06', '$2y$10$WkdRRyBv6zRbvdgtDBsLyuKoeD6O9tO7bSO6KvOE0XLualKdYBnyK', 'pFzwymcyYbQc7zVv5Ep2ObCap7h7dVToijxB9EGSRYiEPi9sURT4Eme8hbAd', '{\"locale\":\"en\"}', '2019-05-21 07:19:30', '2019-05-31 10:50:03'),
-(5, 2, 'test', 'test@test.com', '/users/test_1559387411.jpg', '2019-06-01 09:05:13', '$2y$10$sl9G8wGMpe1CtvyMhzOK7O3gO.TEx3tfrDccFkqSep5E8VUOhKKTi', NULL, NULL, '2019-06-01 09:04:50', '2019-06-01 09:10:11');
+(1, 1, 'Admin', 'admin@admin.com', '/users/admin_1559318096.jpg', '2019-05-23 06:31:04', '$2y$10$Mv2C8HGmeqRpZxD7yRfupueS9mN8fVf0jfbmWLdqqa9Y0CihQCQg6', 'nvp95XpgngR57N8D77SuaGKuXM7ynJKcDI9KIdoKSbT6WsleX6G3voypcVqe', '{\"locale\":\"en\"}', '2019-05-16 05:45:10', '2019-06-05 16:52:34'),
+(4, 2, 'Seppe Meerten', 'meertenseppe@gmail.com', 'users\\May2019\\R6OmZOoBTCkEhpXLEGuV.jpg', '2019-05-21 07:21:06', '$2y$10$nvmFN/nYQS5dMZuWFJrSzuHXVXyWiJgUyFsrhEx8a/kpT2YQqfe5m', 'l9dYO8mpnlcy3qirncr5cg3x0jdI5iyuHeoM82UTQU76eSHFQOwIVuF6MaNs', '{\"locale\":\"en\"}', '2019-05-21 07:19:30', '2019-06-04 10:16:52'),
+(5, 2, 'test', 'test@test.com', '/users/test_1559387411.jpg', '2019-06-01 09:05:13', '$2y$10$X0Yf4gNK44o1JZBaAwYZ1O26B2TAXHZL.LwkFoF5KbfXUXZfJoeiu', 'aaICeRVUCCMPGl9nqEaqjxUWHPgHTSPbsmG9HHYUxc2krs6NY3TeKFiiUtsU', NULL, '2019-06-01 09:04:50', '2019-06-04 13:25:07'),
+(6, 2, 'moretesting', 'moretesting@test.com', '/users/moretesting_1559726011.jpg', '2019-06-05 06:03:50', '$2y$10$zDnhaXFA3B5yvGU4SFwukOpa0DR2DiiJ7v3Jcffb3kutUhKsQ2IGO', NULL, NULL, '2019-06-05 06:02:45', '2019-06-05 07:13:31'),
+(7, 2, 'tester', 'giveMeMoreTest@test.com', 'users/default.png', NULL, '$2y$10$uru4cN5TnXAIqU0JNP7Or.2TsjU7San6VFMBEcE9u0Eonyitdh.bG', NULL, NULL, '2019-06-05 16:40:43', '2019-06-05 16:40:43');
 
 -- --------------------------------------------------------
 
@@ -831,7 +847,15 @@ CREATE TABLE `votes` (
 INSERT INTO `votes` (`id`, `created_at`, `updated_at`, `song_effect_id`, `user_id`, `vote`) VALUES
 (3, '2019-06-03 19:25:28', '2019-06-03 19:25:28', 4, 1, 1),
 (7, '2019-06-03 20:54:03', '2019-06-03 20:54:03', 13, 1, 0),
-(8, '2019-06-03 21:05:16', '2019-06-03 21:05:16', 22, 1, 1);
+(8, '2019-06-03 21:05:16', '2019-06-03 21:05:16', 22, 1, 1),
+(9, '2019-06-04 15:36:16', '2019-06-04 15:36:16', 14, 4, 1),
+(10, '2019-06-05 05:33:31', '2019-06-05 05:33:31', 6, 4, 1),
+(11, '2019-06-05 05:33:33', '2019-06-05 05:33:33', 7, 4, 1),
+(12, '2019-06-05 06:04:16', '2019-06-05 06:04:16', 20, 6, 1),
+(13, '2019-06-05 06:04:26', '2019-06-05 06:04:37', 21, 6, 1),
+(14, '2019-06-05 06:04:52', '2019-06-05 06:04:52', 22, 6, 1),
+(15, '2019-06-05 08:28:00', '2019-06-05 08:28:00', 23, 6, 1),
+(16, '2019-06-05 09:01:11', '2019-06-05 09:01:11', 24, 6, 1);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -979,7 +1003,7 @@ ALTER TABLE `artists`
 -- AUTO_INCREMENT voor een tabel `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT voor een tabel `data_rows`
@@ -997,13 +1021,13 @@ ALTER TABLE `data_types`
 -- AUTO_INCREMENT voor een tabel `effects`
 --
 ALTER TABLE `effects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT voor een tabel `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT voor een tabel `menus`
@@ -1051,19 +1075,19 @@ ALTER TABLE `songs`
 -- AUTO_INCREMENT voor een tabel `song_effects`
 --
 ALTER TABLE `song_effects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT voor een tabel `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
