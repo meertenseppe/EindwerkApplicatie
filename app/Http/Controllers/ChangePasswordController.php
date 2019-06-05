@@ -11,14 +11,22 @@ class ChangePasswordController extends Controller
 {
   public function __construct()
    {
-       $this->middleware('auth');
+      //this class uses the auth middleware
+      $this->middleware('auth');
    }
 
-   public function showChangePasswordForm(){
+   public function showChangePasswordForm()
+   {
+      //returns view : change password
        return view('auth/passwords/changePassword');
    }
 
    public function changePassword(Request $request){
+     /**
+      * Validates change password form and saves & encrypts it when validated;
+      * returns redirect : back->with: error or succes
+      */
+
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
             return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");

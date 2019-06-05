@@ -132,14 +132,14 @@
         	    <div class="card-body">
         	        <div class="row">
                 	    <div class="col-md-1">
-                	        <img src="{{config('app.storage_url')}}{{$Comment->avatar}}" alt="could not find image" style="border-radius: 50%; height: 40px"/> <!--avatar-->
+                	        <img src="{{config('app.storage_url')}}{{$Comment->avatar}}" alt="couldn't find image" style="border-radius: 50%; height: 40px"/>
+                          <!--avatar-->
                 	    </div>
                 	    <div class="col-md-11">
 
                 	        <p>{{$Comment->content}}</p>
                 	    </div>
         	        </div>
-
         	    </div>
         	</div>
         </div>

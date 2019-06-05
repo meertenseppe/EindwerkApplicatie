@@ -1,9 +1,9 @@
 @foreach($SongEffects as $SFX)
 <div class="column sm">
   <?php
-    $percentage_up = 100*($SFX->upvotes / ($SFX->upvotes + $SFX->downvotes));
+    $percentage_up = 100*($SFX->upvotes / ($SFX->upvotes + $SFX->downvotes)); //calculates the percentage of upvotes to color the effect block
 
-    if ($SFX->vote == -1) {
+    if ($SFX->vote == -1) {       //changes color of vote icon depending on the users vote
       $UpvoteColor = 'text-white';
       $DownvoteColor = 'text-white';
     } else if ($SFX->vote == 1) {
@@ -15,9 +15,7 @@
     }
 
    ?>
-   <script type="text/javascript">
-     console.log(<?php echo $SFX; ?>)
-   </script>
+   
   <div class="FXBlock" style="min-width: 180px; min-height: 150px; background: linear-gradient(180deg, #BFC678 <?php  echo $percentage_up?>%, #A6333A 0%); ">
     <div class="row">
       <div class="col interaction">

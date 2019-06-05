@@ -46,6 +46,7 @@ Route::post('/fxblockAction', 'SongsController@postVote')->name('vote');
 
 Route::post('/commentAction', 'CommentsController@postComment')->name('comment');
 
+Route::any('/search', 'SearchController@show')->name('Search');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -64,9 +65,3 @@ Route::get('/songs', 'SongsController@show')->name('Songs');
 Route::get('/songs/{id}', 'SongsController@showSong')->name('Song');
 
 Route::get('/artists/{id}', 'ArtistsController@showSongs')->name('Artist');
-
-Route::any('/search', 'SearchController@show')->name('Search');
-
-//////Test Page/////////////
-  Route::any('/test', 'TestController@show')->name('Test');
-////////////////////////////

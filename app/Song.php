@@ -17,9 +17,9 @@ class Song extends Model
     * returns query results : {song_name, id}
     */
     if ($id == 'all'){
-      $Songs = Song::select('song_name', 'id')->orderBy('song_name')->get();
+      $Songs = Song::select('song_name', 'id', 'artist_id')->orderBy('song_name')->get();
     } else {
-      $Songs = Song::select('song_name', 'id')->where('artist_id', $id)->orderBy('song_name')->get();
+      $Songs = Song::select('song_name', 'id', 'artist_id')->where('artist_id', $id)->orderBy('song_name')->get();
     }
     return $Songs;
   }

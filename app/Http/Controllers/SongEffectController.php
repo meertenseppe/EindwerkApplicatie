@@ -15,7 +15,9 @@ class SongEffectController extends Controller
     public function addEffect()
     {
       /*
-      * Call model to add new recdord to song_effects table? Also adds new effect to effects table if effect doesnt exist yet
+      * Adds new effect song pair to song_effects table,
+      * adds new effect to effects table if the effect doesnt exist in the database yet
+      * returns redirect : back (->with fail if [the 'new' effect allready exists in database, the user isn't logged in]
       */
 
       if (Auth::check()) {
@@ -28,7 +30,8 @@ class SongEffectController extends Controller
           $Effect_type = $_POST['effect_type'];
           $Effect_type = ucfirst(strtolower($Effect_type));
           if (Effect::checkIfExists($Effect_type)) { //user tried to add a new effect we allready had
-            return redirect()->back()->with('fail', 'The effect you tried to add allready exists in our database, try selecting it when adding the effect to the song.');
+            return redirect()->back()->with('fail', 'The effect you tried to add allready exists in our database,'
+            . ' try selecting it when adding the effect to the song.');
           } else { //users added a new effect
           $Effect->type = $Effect_type;
           $Effect->save();

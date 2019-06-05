@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 
 class MyAccountController extends Controller
 {
-    use UploadTrait;
 
+  use UploadTrait;
 
     public function __construct()
     {
+        //class uses auth middleware
         $this->middleware('auth');
     }
 
@@ -24,8 +25,8 @@ class MyAccountController extends Controller
     {
       /**
        * Show the profile for the given user.
-       *
-       * @return View
+       * returns view myAccount/myAccount
+       * returns redirect if not logged in yet
        */
       if (Auth::check()) {
         return view('myAccount/myAccount');
@@ -42,6 +43,10 @@ class MyAccountController extends Controller
 
     public function uploadPhoto(Request $request)
    {
+     /*
+     * validates and saves users avatar
+     * returns redirect : back
+     */
        // Form validation
        $request->validate([
            'avatar'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'

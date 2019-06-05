@@ -9,32 +9,24 @@ use App\Artist as Artist;
 
 class SearchController extends Controller
 {
-    /**
-     * Show the profile for the given user.
-     *
-     * @return View
-     */
+
     public function show()
     {
       /*
-      * returns view and passes variables with song_name, artist_name, song_id for the song coresponding with the searchquota
+      * loads search view with list of songs where the song_name matches (in part) the search_quota
+      * loads view : search/search with variables [ReturnList: {song_name, artist_name, song_id}, number_of_songs_per_column, search_quota]
       */
       $SearchQuota = $_POST['Search'];
+      $ReturnList = Song::SearchForSongs($SearchQuota);
 
-      if($Option = 'Song') {
-        $ReturnList = Song::SearchForSongs($SearchQuota);
-
-        foreach ($ReturnList as $Song) {
-          $ArtistName = Artist::getNameById($Song->artist_id);
-          $Song->setAttribute('artist_name', $ArtistName[0]->artist_name);
-          //echo $Song->song_name.' - '.$Song->artist_name.' - '.$Song->id.'<br>';
-        }
-      } else {
-        //search for artist;
+      foreach ($ReturnList as $Song) {
+        $ArtistName = Artist::getNameById($Song->artist_id);
+        $Song->setAttribute('artist_name', $ArtistName[0]->artist_name);
+        //echo $Song->song_name.' - '.$Song->artist_name.' - '.$Song->id.'<br>';
       }
       $Max = Song::DevideSongsInColumns($SearchQuota, 2);
-      //echo $Max;
-      return view('search/search', ['ReturnList' => $ReturnList, 'Max' => $Max, 'Option' => $Option, 'SearchQuota' => $SearchQuota]);
+
+      return view('search/search', ['ReturnList' => $ReturnList, 'Max' => $Max, 'SearchQuota' => $SearchQuota]);
 
     }
 }

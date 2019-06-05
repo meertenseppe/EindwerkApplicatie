@@ -13,7 +13,7 @@ class Artist extends Model
     public static function List() {
       /*
       * Returns a list with all artist_names in alphabetical order ({artist_name:name'})
-      * returns query results : list of artist_name's & artist_id's
+      * returns query results : {artist_name, artist_id}
       */
       $Artists = Artist::select('artist_name', 'id')->orderBy('artist_name')->get();
       return $Artists;

@@ -13,15 +13,15 @@
       <h1>Favorites</h1>
     </div>
     <div class="row">
-      <div class="col-sm"><ul>
+      <div class="col-sm"><ul> <!--opens first column-->
       <?php
       $Counter = 0;
       $FirstChar = 'initial'; //define an initial value != first letter of first name
       foreach ($ReturnList  as $Song) {
           $Counter += 1; //counter for columns
           if ($Counter > $Max) {
-              echo '</ul></div>'; //close column
-              echo '<div class="col-sm"><ul>'; //create new column
+              ?></ul></div> <!--close column-->
+              <div class="col-sm"><ul><?php //create new column
               $Counter = 0;
           }
           $SongName = ucwords(strtolower($Song->song_name)); //Song name with first letter uppercase
@@ -37,15 +37,19 @@
             <form action="{{route('deleteFavoriteAction')}}" method="post">
               {{ csrf_field() }}
               <input type="hidden" name="delete_id" value="{{$Song->song_id}}">
-              <button type="submit" name="delete" class="btn btn-default"> <i class="material-icons">delete</i>  </button>
-              <a href="{{route('Songs').'/'.$Song->song_id}}"> {{ucwords(strtolower($SongName))}}</a> - <a href="{{route('Artists').'/'.$Song->artist_id}}">{{ucwords(strtolower($ArtistName))}}</a>
+              <button type="submit" name="delete" class="btn btn-default">
+                <i class="material-icons">delete</i>
+              </button>
+              <a href="{{route('Songs').'/'.$Song->song_id}}"> {{ucwords(strtolower($SongName))}}</a>
+               -
+              <a href="{{route('Artists').'/'.$Song->artist_id}}">{{ucwords(strtolower($ArtistName))}}</a>
             </form>
 
           </li>
           <?php
         }
        ?>
-     </ul></div> <!--column-->
+     </ul></div> <!--closes last column-->
    </div> <!--row-->
   </div> <!--container-->
 

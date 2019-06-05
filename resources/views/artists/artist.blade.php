@@ -2,7 +2,6 @@
 
 @section('head')
   <!--extra header content (bv. scripts, css links, ...)-->
-  <link href="{{ asset('css/main.css') }}" rel="stylesheet">
   <title><?php ucwords(strtolower($ArtistName)) ?></title>
 @endsection
 

@@ -76,14 +76,15 @@
             echo '<div class="col-sm"><ul>'; //create new column
             $Counter = 0;
         }
-        $SongName = ucwords(strtolower($Song->song_name)); //Song name with first letter uppercase
-        $NewFirstChar = $SongName[0]; //actual first letter of song name
+        $song_name = ucwords(strtolower($Song->song_name)); //Song name with first letter uppercase
+        $artist_name = ucwords(strtolower($Song->artist_name)); //artist name with first letter uppercase
+        $NewFirstChar = $song_name[0]; //actual first letter of song name
         if ($FirstChar != $NewFirstChar) {
           $FirstChar = $NewFirstChar;
           echo '<li><h5>'.$FirstChar.'</h5></li>';
           echo '<hr>';
         }
-        echo '<li><a href="'.route('Songs').'/'.$Song->id.'">'.ucwords(strtolower($SongName)).'</a></li>';
+        echo '<li><a href="'.route('Songs').'/'.$Song->id.'">'.$song_name.'</a> - <a href="'.route('Artists').'/'.$Song->artist_id.'">'.$artist_name.'</a>'.'</li>';
       }
 
      ?>

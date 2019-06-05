@@ -16,38 +16,54 @@ use App\Comment;
 
 class SongsController extends Controller
 {
-    /**
-     * Show the profile for the given user.
-     *
-     * @return View
-     */
+
     public function show()
     {
+      /**
+       * loads songs:list view
+       * returns view : songs/songList with variables [list:{song_name, song_id}, list:{artist_name, artist_id}, songs_per_column ]
+       */
       $SongList = Song::List();
+      foreach ($SongList as $Song) {
+        $artist_name = Artist:: getNameById($Song->artist_id)->first()->artist_name;
+        $Song->setAttribute('artist_name', $artist_name);
+      }
       $ArtistList = Artist::List();
-      $Max = ceil(Song::count()/4);
+      $Max = ceil(Song::count()/3);
     return view('songs/songList', ['SongList' => $SongList, 'ArtistList' => $ArtistList, 'Max' => $Max]);
     }
 
-    public function showSong($id) {
-      $Details = Song::DefineSong($id);
-      $SongName = $Details[0]->song_name;
-      $artist_id = $Details[0]->artist_id;
-      $ArtistName = Artist::getNameById($artist_id);
-      $ArtistName = $ArtistName[0]->artist_name;
-      $SongEffects = SongEffect::getEffectBySongId($id);
-      foreach ($SongEffects as $SFX) {
-        $Type = Effect::getEffectById($SFX->effect_id);
-        $SFX->setAttribute('type', $Type[0]->type);
-        if (Auth::check()) {
-          $vote = Vote::findVote($SFX->id);
-          $SFX->setAttribute('vote', $vote);
-        } else {
-          $SFX->setAttribute('vote', -1);
+    public function showSong($id)
+    {
+      /**
+       * loads song view from song_id
+       * returs view : songs/song with variables
+       * $Data =[song_name, artist_name, artist_id, song_effects:list:{effect_id, upvotes, downvotes, effect_id, user.vote},
+       *           song_id, effects_not_in_song:list:{effect_type, effect_id, song_id},
+       *            comments:list:{id, created_at, song_id, user_id, user_name, user_avatar, content}]
+       */
+      $Details = Song::DefineSong($id); //gets song_name and artist_id
+        $SongName = $Details[0]->song_name;
+        $artist_id = $Details[0]->artist_id;
+
+      $ArtistName = Artist::getNameById($artist_id); //gets artist_name
+        $ArtistName = $ArtistName[0]->artist_name;
+
+      $SongEffects = SongEffect::getEffectBySongId($id); //gets effect_id, upvotes, downvotes and effect_id
+        foreach ($SongEffects as $SFX) {
+          $Type = Effect::getEffectById($SFX->effect_id);
+          $SFX->setAttribute('type', $Type[0]->type);
+          if (Auth::check()) {
+            $vote = Vote::findVote($SFX->id); //gets users vote
+            $SFX->setAttribute('vote', $vote);
+          } else { //user isn't logged in
+            $SFX->setAttribute('vote', -1); //vote = -1 indecates to the view that an effect hasn't been voted on by the user
+          }
         }
-      }
-      $AllEffectsNotInSong = SongEffect_Effect::effectsNotUsedBySong($id);
-      $Comments = Comment::commentsPerSong($id);
+
+      $AllEffectsNotInSong = SongEffect_Effect::effectsNotUsedBySong($id); //gets all effects not used by the song yet, so the user can select those when adding a song
+
+      $Comments = Comment::commentsPerSong($id); //gets comments for song
 
 
       $Data =  ['SongName' => $SongName   //data to pass to view
@@ -63,40 +79,48 @@ class SongsController extends Controller
 
     public function addNewSong()
     {
-      $Song = new Song;
-      $Song_name = ucwords(strtolower($_POST['song_name']));
-      $Song->song_name = $Song_name;
-      $Artist_id = $_POST['artist_id'];
+      /**
+       * adds new song to songs table
+       * returns redirect : back (->with fail if the added artist or song allready exists in the database)
+       */
 
-      if ($Artist_id == 'new') {
+      $Artist_id = $_POST['artist_id'];
+      if ($Artist_id == 'new') { //user selected 'add a new artist'
         $Artist_name = ucwords(strtolower($_POST['new_artist']));
-        if (Artist::checkIfExists($Artist_name))
+        if (Artist::checkIfExists($Artist_name)) //check if artist exists in database
         {
           return redirect()->back()->with('fail', 'The artist you tried to add allready exists in our database, try selecting it when adding the artist to the song.');
 
-        } else {
+        } else { //create new artist record
           $Artist = new Artist;
           $Artist->artist_name = $Artist_name;
           $Artist->save();
-          $Artist_id = $Artist->id;
+          $Artist_id = $Artist->id; //replaces artist_id = 'new' with newly created artist_id
         }
       }
 
-      $Song->artist_id = $Artist_id;
-      if (Song::checkIfExists($Song_name, $Artist_id))
+      $Song_name = ucwords(strtolower($_POST['song_name']));
+      if (Song::checkIfExists($Song_name, $Artist_id)) //check if song-artist pair exists in database
       {
          return redirect()->back()->with('fail', 'The song you tried to add allready exists in our database.');
       } else {
+        $Song = new Song; //new song meets all of the above requirements, add record to database
+        $Song->artist_id = $Artist_id;
+        $Song->song_name = $Song_name;
         $Song->save();
       }
 
-      return redirect(route("Song", $Song->id));
+      return redirect()->back();
 
     }
 
     public function postVote()
     {
-      if(Auth::check()) {
+      /**
+       * adds, replaces or deletes the users vote from an effect, depending on if & how the user voted previously and how the user voted now.
+       * returns redirect : back (->with fail if user isn't logged in)
+       */
+      if(Auth::check()) { //user needs to be logged in
         $user_id = Auth()->user()->id;
         $voteRequest = $_POST['voteRequest'];
         $song_effect_id = $_POST['SFX_id'];
@@ -116,8 +140,8 @@ class SongsController extends Controller
             }
             $song_effect->save();
 
-        } else if ($currentVote != $voteRequest) {           //cant vote the same thing twice...
-          $vote = Vote::findVoteFromDetails($song_effect_id, $user_id);
+        } else if ($currentVote != $voteRequest) {  //cant vote the same thing twice...
+          $vote = Vote::findVoteFromDetails($song_effect_id, $user_id); //gets previous vote
           $vote->vote = $voteRequest;
           $vote->save();
 
@@ -153,7 +177,7 @@ class SongsController extends Controller
 
       }
 
-    }
+    } //endfunction postVote()
 
 
 }

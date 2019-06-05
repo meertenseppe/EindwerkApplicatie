@@ -16,7 +16,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -46,7 +45,7 @@
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('Songs') }}">{{ __('Songs') }}</a>
                       </li>
-                    <?php if(Auth::check()){ ?>
+                    <?php if(Auth::check()){ ?> <!--show Favorites when user is logged in-->
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('Favorites') }}">{{ __('Favorites') }}</a>
                       </li>
@@ -71,7 +70,7 @@
                         </form>
 
                       </li>
-                        <!-- Authentication Links -->
+                        <!-- Authentication Links depending on wheter or not the user is logged in-->
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
